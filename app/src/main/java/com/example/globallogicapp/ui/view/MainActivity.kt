@@ -1,30 +1,37 @@
 package com.example.globallogicapp.ui.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.example.globallogicapp.R
 import com.example.globallogicapp.databinding.ActivityMainBinding
-import com.example.globallogicapp.ui.viewmodel.ListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainInterface {
     private lateinit var binding: ActivityMainBinding
-
-    private val viewModel: ListViewModel by viewModels()
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.onCreate()
-
-        viewModel.articleList.observe(this, Observer {
-            binding.rvArticles.layoutManager = LinearLayoutManager(this)
-            binding.rvArticles.adapter = ArticlesAdapter(this, it)
-        })
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navController = navHostFragment.findNavController()
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun setBackArrow(show: Boolean){
+        supportActionBar!!.setDisplayHomeAsUpEnabled(show)
+    }
+}
+
+interface MainInterface {
+    fun setBackArrow(show: Boolean)
 }

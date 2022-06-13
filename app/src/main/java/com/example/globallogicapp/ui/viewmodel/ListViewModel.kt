@@ -1,5 +1,6 @@
 package com.example.globallogicapp.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +18,7 @@ class ListViewModel @Inject constructor(private val getArticlesUseCase: GetArtic
     fun onCreate() {
         viewModelScope.launch {
             val response = getArticlesUseCase()
+
             articleList.postValue(response)
         }
     }
