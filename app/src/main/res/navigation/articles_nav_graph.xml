@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/articles_nav_graph"
+    app:startDestination="@id/articleListFragment">
+
+    <fragment
+        android:id="@+id/articleListFragment"
+        android:name="com.example.globallogicapp.ui.view.ArticleListFragment"
+        android:label="fragment_article_list"
+        tools:layout="@layout/fragment_article_list" >
+        <action
+            android:id="@+id/action_articleListFragment_to_articlesDetailFragment"
+            app:destination="@id/articlesDetailFragment"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/articlesDetailFragment"
+        android:name="com.example.globallogicapp.ui.view.ArticlesDetailFragment"
+        android:label="fragment_articles_detail"
+        tools:layout="@layout/fragment_articles_detail" >
+        <argument
+            android:name="article"
+            app:argType="com.example.globallogicapp.data.model.ArticleModel" />
+    </fragment>
+</navigation>
